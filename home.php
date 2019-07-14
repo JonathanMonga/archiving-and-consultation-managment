@@ -12,7 +12,7 @@
 
 
   <div class="large-9 columns">
-      <div class="panel"><img src="images/panterre.jpg"></div>
+      <div class="panel"><img src="images/archive.jpg"></div>
   </div>
   <div class="large-3 columns text-right">
 	  <div class="panel">
