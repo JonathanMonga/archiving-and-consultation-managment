@@ -15,7 +15,7 @@ $query = $_POST['query'];
 		  
 		  ?>
 		  
-	  </div>
+   </div>
 
 	</div>
 	<div class="row">
@@ -24,43 +24,77 @@ $query = $_POST['query'];
 		  <table>
 			  <thead>
 				  <tr>
-					  <th style="background:rgb(103, 58, 183);color:white">Code de l'archive</th>
-					  <th style="background:rgb(103, 58, 183);color:white">Nom de l'archive</th>
-					  <th style="background:rgb(103, 58, 183);color:white">Promotion</th>
-					  <th style="background:rgb(103, 58, 183);color:white">Année</th>
-					  <th style="background:rgb(103, 58, 183);color:white">Bibliothécaire</th>
+				      <?php if(implode($query, ":")[0] == "archive") { ?>
+						<th style="background:rgb(103, 58, 183);color:white">Code de l'archive</th>
+					    <th style="background:rgb(103, 58, 183);color:white">Nom de l'archive</th>
+					    <th style="background:rgb(103, 58, 183);color:white">Promotion</th>
+					    <th style="background:rgb(103, 58, 183);color:white">Année</th>
+					    <th style="background:rgb(103, 58, 183);color:white">Bibliothécaire</th>
+					  <?php } ?>
+					  <?php if(implode($query, ":")[0] == "consultant") { ?>
+						<th style="background:rgb(103, 58, 183);color:white">Matricule du consultant</th>
+				        <th style="background:rgb(103, 58, 183);color:white">Nom du consultant</th>
+				        <th style="background:rgb(103, 58, 183);color:white">Promotion</th>
+				        <th style="background:rgb(103, 58, 183);color:white">Faculté</th>
+				        <th style="background:rgb(103, 58, 183);color:white">Institution</th>
+					  <?php } ?>
 				  </tr>
 			  </thead>
 			  <tbody id="searc-results">
 				  <?php
-				  	
-				  $sql = "SELECT * FROM archives WHERE (`code_archive` LIKE :query) OR (`nom_travail` LIKE :query )"; // SQL Query
-				  if (!$stmt = $conn->prepare($sql)) {
-				  	echo "Statement invalid.<br>";
-				  }else{ 
-					  if ($stmt->execute(array(":query" => "%".$query."%" ))) {
-						  
-						  $meds = $stmt->fetchAll();
-						  if ( count($meds) ) {
-						  
-							  foreach ($meds as $row)
-							  {
-								print '<tr class="med_row" id="med_'.$row['code_archive'].'">'; // put ID in CSS class to enable selecting specific rows of the table via JS in the form med_ID-GOES-HERE
-  print '<td><a href="index.php?page=modifier-archive&id='.$row['code_archive'].'">'.ucwords($row['code_archive']).'</a></td>'; // Name of medication and ID label
-  print '<td>'.$row['nom_auteur'].'</td>';
-  print '<td>'.$row['sujet_travail'].'</td>';
-  print '<td>'.$row['prom_auteur'].'</td>';
-  print '<td>'.$row['annee'].'</td>';
-  print '<td><a href="index.php?page=modifier-biblio&id='.$row['mat_biblio'].'">'.ucwords($row['nom_biblio']).'</a></td>'; // Name of medication and ID label
-							  print '</tr>';
-							  }
-						  } else {
-							  print '<div class="alert-box alert" data-alert-box><p>Aucun résultat ne correspond à votre recherche.</p></div>';
-						  }
-						  }
-					  }
-				  
-				  
+				      if(implode($query, ":")[0] == "archive") {
+						$sql = "SELECT * FROM archives WHERE (`annee` LIKE :query) OR (`prom_auteur` LIKE :query) OR (`code_archive` LIKE :query) OR (`sujet_travail` LIKE :query )"; // SQL Query
+						if (!$stmt = $conn->prepare($sql)) {
+							echo "Statement invalid.<br>";
+						}else{ 
+							if ($stmt->execute(array(":query" => "%".$query."%" ))) {
+								
+								$meds = $stmt->fetchAll();
+								if ( count($meds) ) {
+								
+									foreach ($meds as $row)
+									{
+									  print '<tr class="med_row" id="med_'.$row['code_archive'].'">'; // put ID in CSS class to enable selecting specific rows of the table via JS in the form med_ID-GOES-HERE
+		print '<td><a href="index.php?page=modifier-archive&id='.$row['code_archive'].'">'.ucwords($row['code_archive']).'</a></td>'; // Name of medication and ID label
+		print '<td>'.$row['nom_auteur'].'</td>';
+		print '<td>'.$row['sujet_travail'].'</td>';
+		print '<td>'.$row['prom_auteur'].'</td>';
+		print '<td>'.$row['annee'].'</td>';
+									 print '</tr>';
+									}
+								} else {
+									print '<div class="alert-box alert" data-alert-box><p>Aucun résultat ne correspond à votre recherche.</p></div>';
+								}
+								}
+							}
+					  } 
+
+					  if(implode($query, ":")[0] == "consultant") {
+						$sql = "SELECT * FROM consultant WHERE (`inst_consult` LIKE :query) OR (`fac_consult` LIKE :query) OR (`mat_consult` LIKE :query) OR (`nom_consult` LIKE :query )"; // SQL Query
+						if (!$stmt = $conn->prepare($sql)) {
+							echo "Statement invalid.<br>";
+						}else{ 
+							if ($stmt->execute(array(":query" => "%".$query."%" ))) {
+								
+								$meds = $stmt->fetchAll();
+								if ( count($meds) ) {
+								
+									foreach ($meds as $row)
+									{
+										print '<tr class="med_row" id="med_'.$row['mat_consult'].'">'; // put ID in CSS class to enable selecting specific rows of the table via JS in the form med_ID-GOES-HERE
+										print '<td><a href="index.php?page=modifier-consultant&id='.$row['mat_consult'].'">'.ucwords($row['mat_consult']).'</a></td>'; // Name of medication and ID label
+										print '<td>'.$row['nom_consult'].'</td>';
+										print '<td>'.$row['prom_consult'].'</td>';
+										print '<td>'.$row['fac_consult'].'</td>';
+										print '<td>'.$row['inst_consult'].'</td>';
+									 print '</tr>';
+									}
+								} else {
+									print '<div class="alert-box alert" data-alert-box><p>Aucun résultat ne correspond à votre recherche.</p></div>';
+								}
+								}
+							}
+					  } 
 				  ?>
 			  
 			  

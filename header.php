@@ -225,7 +225,7 @@
     <section class="top-bar-section">
 
       <!-- Right Nav Section -->
-      <ul class="right">
+	  <ul class="right">
 		  <li class="has-form"> 
 			  <form action="index.php?page=search" method="POST">
 				  <div class=" row collapse">
@@ -239,20 +239,20 @@
 			  </form> 
 			  
 		  </li>
+		  
         <li class="divider"></li>
         <li class="has-dropdown">
           <a href="#">Archivages</a>
           <ul class="dropdown">
             <li><a href="index.php?page=afficher-archives" style="background:rgb(103, 58, 183);">Voir les archives</a></li>
             <li><a href="index.php?page=modifier-archive" style="background:rgb(103, 58, 183);">Ajouter/modifier un archive</a></li>
-          </ul>
+</ul>
         </li>
         <li class="has-dropdown">
           <a href="#">Consultants</a>
           <ul class="dropdown">
             <li><a href="index.php?page=afficher-consultants"  style="background:rgb(103, 58, 183);">Voir la liste</a></li>
-            <li><a href="index.php?page=modifier-consultant" style="background:rgb(103, 58, 183);">Ajouter/modifier un consultant</a></li>
-          </ul>
+            <li><a href="index.php?page=modifier-consultant" style="background:rgb(103, 58, 183);">Ajouter/modifier un consultant</a></li></ul>
         </li>
         <li class="has-dropdown">
           <a href="#">Consultations</a>
