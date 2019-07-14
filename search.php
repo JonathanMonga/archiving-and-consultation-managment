@@ -24,14 +24,14 @@ $query = $_POST['query'];
 		  <table>
 			  <thead>
 				  <tr>
-				      <?php if(implode($query, ":")[0] == "archive") { ?>
+				      <?php if(strtolower(explode(":",$query)[0]) == "a") { ?>
 						<th style="background:rgb(103, 58, 183);color:white">Code de l'archive</th>
 					    <th style="background:rgb(103, 58, 183);color:white">Nom de l'archive</th>
 					    <th style="background:rgb(103, 58, 183);color:white">Promotion</th>
 					    <th style="background:rgb(103, 58, 183);color:white">Année</th>
 					    <th style="background:rgb(103, 58, 183);color:white">Bibliothécaire</th>
 					  <?php } ?>
-					  <?php if(implode($query, ":")[0] == "consultant") { ?>
+					  <?php if(strtolower(explode(":",$query)[0]) == "c") { ?>
 						<th style="background:rgb(103, 58, 183);color:white">Matricule du consultant</th>
 				        <th style="background:rgb(103, 58, 183);color:white">Nom du consultant</th>
 				        <th style="background:rgb(103, 58, 183);color:white">Promotion</th>
@@ -42,12 +42,12 @@ $query = $_POST['query'];
 			  </thead>
 			  <tbody id="searc-results">
 				  <?php
-				      if(implode($query, ":")[0] == "archive") {
+				      if(strtolower(explode(":",$query)[0]) == "a") {
 						$sql = "SELECT * FROM archives WHERE (`annee` LIKE :query) OR (`prom_auteur` LIKE :query) OR (`code_archive` LIKE :query) OR (`sujet_travail` LIKE :query )"; // SQL Query
 						if (!$stmt = $conn->prepare($sql)) {
 							echo "Statement invalid.<br>";
 						}else{ 
-							if ($stmt->execute(array(":query" => "%".$query."%" ))) {
+							if ($stmt->execute(array(":query" => "%".explode(":",$query)[1]."%" ))) {
 								
 								$meds = $stmt->fetchAll();
 								if ( count($meds) ) {
@@ -69,12 +69,12 @@ $query = $_POST['query'];
 							}
 					  } 
 
-					  if(implode($query, ":")[0] == "consultant") {
+					  if(strtolower(explode(":",$query)[0]) == "c") {
 						$sql = "SELECT * FROM consultant WHERE (`inst_consult` LIKE :query) OR (`fac_consult` LIKE :query) OR (`mat_consult` LIKE :query) OR (`nom_consult` LIKE :query )"; // SQL Query
 						if (!$stmt = $conn->prepare($sql)) {
 							echo "Statement invalid.<br>";
 						}else{ 
-							if ($stmt->execute(array(":query" => "%".$query."%" ))) {
+							if ($stmt->execute(array(":query" => "%".explode(":",$query)[1]."%" ))) {
 								
 								$meds = $stmt->fetchAll();
 								if ( count($meds) ) {
